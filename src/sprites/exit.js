@@ -7,6 +7,5 @@ export default class Exit extends Phaser.GameObjects.Sprite {
     scene.add.zone(0, 0, 100, 100);
     scene.physics.add.existing(this); 
     this.body.allowGravity = false;
-
   }
 }

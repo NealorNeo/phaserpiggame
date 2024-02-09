@@ -1,23 +1,19 @@
 import Phaser from "phaser";
 
 export default class King extends Phaser.GameObjects.Sprite {
-  isDead = false;
-  isAttacking = false;
-
   constructor(scene) {
     super(scene)
+    this.isDead = false;
+    this.isAttacking = false;
+    this.moveSpeed = 100;
+    this.jumpVelocity = 270;
 
     scene.add.existing(this);
     scene.physics.add.existing(this); 
     this.body.setSize(30, 30);
-    this.body.setOffset(35, 35);
+    // this.body.setOffset(35, 35);
     // this.setPosition(500, 1000);
     // this.setScale(3);
-
-    // Class properties for movement parameters
-    
-
-
 
     this.play({
       key: "king-Idle",
@@ -52,7 +48,7 @@ export default class King extends Phaser.GameObjects.Sprite {
         // Left Run
       if (this.cursors.left.isDown) {
         this.setFlipX(true);
-        this.body.setVelocityX(-100);
+        this.body.setVelocityX(-this.moveSpeed);
         if (!this.isAttacking) {
           this.play({
             key: "king-Run",
@@ -65,7 +61,7 @@ export default class King extends Phaser.GameObjects.Sprite {
       // Right Run
       if (this.cursors.right.isDown) {
         this.setFlipX(false);
-        this.body.setVelocityX(100);
+        this.body.setVelocityX(this.moveSpeed);
         if (!this.isAttacking) {
           this.play({
             key: "king-Run",
@@ -90,7 +86,7 @@ export default class King extends Phaser.GameObjects.Sprite {
       
       // Jump
       if (this.cursors.up.isDown && this.body.onFloor()) {
-        this.body.setVelocityY(-270);
+        this.body.setVelocityY(-this.jumpVelocity);
         // this.play({
         //   key:"king-Jump",  
         //   repeat: -1,
@@ -142,7 +138,7 @@ export default class King extends Phaser.GameObjects.Sprite {
         // Left Run
       if (this.cursors.left.isDown) {
         this.setFlipX(true);
-        this.body.setVelocityX(-100);
+        this.body.setVelocityX(-this.moveSpeed);
         if (!this.isAttacking) {
           this.play({
             key: "king-Run",
@@ -155,7 +151,7 @@ export default class King extends Phaser.GameObjects.Sprite {
       // Right Run
       if (this.cursors.right.isDown) {
         this.setFlipX(false);
-        this.body.setVelocityX(100);
+        this.body.setVelocityX(this.moveSpeed);
         if (!this.isAttacking) {
           this.play({
             key: "king-Run",
@@ -168,7 +164,7 @@ export default class King extends Phaser.GameObjects.Sprite {
       
       // Up Run
       if (this.cursors.up.isDown) {
-        this.body.setVelocityY(-100);
+        this.body.setVelocityY(-this.moveSpeed);
         if (!this.isAttacking) {
           this.play({
             key: "king-Run",
@@ -181,7 +177,7 @@ export default class King extends Phaser.GameObjects.Sprite {
 
       // Down Run
       if (this.cursors.down.isDown) {
-        this.body.setVelocityY(100);
+        this.body.setVelocityY(this.moveSpeed);
         if (!this.isAttacking) {
           this.play({
             key: "king-Run",
@@ -191,7 +187,7 @@ export default class King extends Phaser.GameObjects.Sprite {
           );
         } 
       }
-      // Think about anime-key issue
+      // Think about anime-key issue: Happens when "king-Run" replace "king-attack"
        
       // Stand Still
       if (this.cursors.left.isUp && this.cursors.right.isUp && this.cursors.up.isUp && this.cursors.down.isUp) { 
@@ -233,5 +229,4 @@ export default class King extends Phaser.GameObjects.Sprite {
       this.isDead = false;
     }
   }
-
 }

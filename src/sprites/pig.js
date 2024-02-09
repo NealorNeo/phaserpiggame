@@ -1,16 +1,15 @@
 import Phaser from "phaser";
 
 export default class Pig extends Phaser.GameObjects.Sprite {
-  isDead = false;
-  isAlert = false;
-
   constructor(scene) {
     super(scene)
-    
+    this.moveSpeed = 60;
+    this.isDead = false;
+
     scene.add.existing(this);
     scene.physics.add.existing(this); 
     this.body.setSize(20, 20);
-    this.body.setOffset(30, 30);
+    // this.body.setOffset(30, 30);
     // this.setPosition(500, 200);
 
     this.play({ 
@@ -30,7 +29,7 @@ export default class Pig extends Phaser.GameObjects.Sprite {
 
   runRight() {
     this.setFlipX(true);
-    this.body.setVelocityX(60);
+    this.body.setVelocityX(this.moveSpeed);
     this.play({
       key: "pig-Run",
       repeat: -1,
@@ -41,7 +40,7 @@ export default class Pig extends Phaser.GameObjects.Sprite {
 
   runLeft() { 
     this.setFlipX(false);
-    this.body.setVelocityX(-60);
+    this.body.setVelocityX(-this.moveSpeed);
     this.play({
       key: "pig-Run",
       repeat: -1,
@@ -50,9 +49,9 @@ export default class Pig extends Phaser.GameObjects.Sprite {
     ); 
   }
 
-  alert() {
-    this.body.setVelocityY(-50);
-  }
+  // alert() {
+  //   this.body.setVelocityY(-50);
+  // }
 
   // Side-Scroll Model
   updateSideScroll(king) {
@@ -78,12 +77,9 @@ export default class Pig extends Phaser.GameObjects.Sprite {
     const distance = Phaser.Math.Distance.Between(this.x, this.y, king.x, king.y);
 
     if (!king.isDead && !this.isDead && distance < 150) {
-      const moveSpeed = 50;
       const angle = Phaser.Math.Angle.Between(this.x, this.y, king.x, king.y);
-      const newX = moveSpeed * Math.cos(angle);
-      const newY = moveSpeed * Math.sin(angle);
-
-      
+      const newX = this.moveSpeed * Math.cos(angle);
+      const newY = this.moveSpeed * Math.sin(angle);
 
       this.body.setVelocity(newX, newY);
       if (this.x > king.x) {
@@ -103,9 +99,6 @@ export default class Pig extends Phaser.GameObjects.Sprite {
         true
         ); 
       }
-
-
-
     } else if (king.isDead && !this.isDead) {
       this.body.setVelocity(0, 0);
       this.play({ 

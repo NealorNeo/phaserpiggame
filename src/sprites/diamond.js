@@ -1,24 +1,20 @@
 import Phaser from "phaser";
 
 export default class Diamond extends Phaser.GameObjects.Sprite {
-  isHit = false;
-
   constructor(scene) {
     super(scene)
+    this.isHit = false;
 
     scene.add.existing(this);
     scene.physics.add.existing(this); 
     this.body.setSize(12, 12);
-    this.body.setOffset(42, 42);
+    // this.body.setOffset(42, 42);
     this.setPosition(420, 350);
     this.body.allowGravity = false; 
 
-
-  
     this.play({
       key: "diamond-Idle",
     });
-
   }
 
   hit() {
@@ -27,8 +23,6 @@ export default class Diamond extends Phaser.GameObjects.Sprite {
       key: "diamond-Hit",
   });
   }
-  
-
 }
 
 
